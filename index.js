@@ -43,7 +43,7 @@ app.post("/api/users/:_id/exercises", function(req, res) {
     date = new Date().toDateString();
   }
   user.log.push({description:description,duration:duration,date:date});
-  res.json({"_id":id,"username":user.username,"date":date,"duration":duration,"description":description});
+  res.json({"username":user.username,"description":description,"duration":duration, "date":date, "_id":id});
 });
 
 /*/ Get Exercise log
@@ -71,7 +71,7 @@ app.get("/api/users/:_id/logs", function(req, res) {
     toDate = new Date(req.query.to);
     userLog = userLog.filter(e => new Date(e.date).valueOf() <= toDate.valueOf());
   }
-  res.json({"_id":id, "username":user.username, "count":userLog.length, "log":userLog});
+  res.json({"username":user.username, "count":userLog.length, "_id":id,  "log":userLog});
 });
 
 // Get All Users
@@ -79,7 +79,7 @@ app.get("/api/users", function(req, res) {
   let response = [];
   for (let i = 0; i < users.length; i++) {
     let user = users[i];
-    response.push({"_id":user._id,"username":user.username/*,"__v":0*/});
+    response.push({"username":user.username, "_id":user._id});
   }
   res.send(response);
 })
