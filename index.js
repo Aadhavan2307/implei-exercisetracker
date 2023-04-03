@@ -162,12 +162,14 @@ app.get("/api/users", async function(req, res){
 })
 
 app.post("/api/users/:_id/exercises", async function(req, res) {
-  let _id = req.body[":_id"];
+  let _id = req.params["_id"];
   let { duration, date, description } = req.body;
+  console.log(req.params);
+  console.log(_id);
   let foundUser = await User.findById(_id);
 
   if(!foundUser) {
-    res.json({ message: "No user with said ID" })
+    return res.json({ message: "No user with said ID" })
   }
 
   if (parseInt(duration) != NaN) {
