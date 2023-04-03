@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 });
 
 // User Database
-let users = [{username:"Implei", _id:"0", log:[{description:"hello",duration:15,date:"Fri Dec 25 2015"},{description:"bye",duration:15,date:"Fri Dec 25 2015"}]}];
+let users = [{username:"Implei", _id:"0", log:[{description:"hello",duration:15,date:"Sun Dec 27 2015"},{description:"bye",duration:15,date:"Fri Dec 25 2015"}]}];
 
 // Create New User Function
 app.post("/api/users", function(req, res) {
@@ -46,11 +46,32 @@ app.post("/api/users/:_id/exercises", function(req, res) {
   res.json({"_id":id,"username":user.username,"date":date,"duration":duration,"description":description});
 });
 
-// Get Exercise log
+/*/ Get Exercise log
 app.get("/api/users/:_id/logs", function(req, res) {
   let id = req.params._id;
   let user = users[id];
   res.json({"_id":id, "username":user.username, "count":user.log.length, "log":user.log});
+});*/
+
+// Get Queried Exercise Log
+app.get("/api/users/:_id/logs", function(req, res) {
+  let id = req.params._id;
+  let user = users[id];
+  let userLog = user.log;
+  console.log(req.query.limit);
+  console.log(req.query.from);
+  if (req.query.limit != undefined) {
+    userLog = userLog.slice(0, parseInt(req.query.limit));
+  }
+  if (req.query.from != undefined) {
+    fromDate = new Date(req.query.from);
+    userLog = userLog.filter(e => new Date(e.date).valueOf() >= fromDate.valueOf());
+  }
+  if (req.query.to != undefined) {
+    toDate = new Date(req.query.to);
+    userLog = userLog.filter(e => new Date(e.date).valueOf() <= toDate.valueOf());
+  }
+  res.json({"_id":id, "username":user.username, "count":userLog.length, "log":userLog});
 });
 
 // Get All Users
