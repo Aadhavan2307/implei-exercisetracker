@@ -125,11 +125,11 @@ app.get("/api/users/:_id/logs", async function(req, res) {
   if (from) {
     fromDate = new Date(from);
     fromDate.setDate(fromDate.getDate()-1);
-    exercises = exercises.filter(e => new Date(e.date).valueOf() >= fromDate.valueOf());
+    exercises = exercises.filter(e => new Date(e.date).UTC() >= fromDate.UTC());
   }
   if (to) {
     toDate = new Date(to);
-    exercises = exercises.filter(e => new Date(e.date).valueOf() <= (toDate.valueOf()));
+    exercises = exercises.filter(e => new Date(e.date).UTC() <= (toDate.UTC()));
   }
   if (limit) {
     exercises = exercises.splice(0, parseInt(limit));
@@ -184,6 +184,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 
   if (!date) {
     date = new Date();
+    date.setUTCDate().setUTCMonth().setUTCFullYear();
   } else {
     date = new Date(date);
   }
