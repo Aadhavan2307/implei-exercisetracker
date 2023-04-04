@@ -125,11 +125,11 @@ app.get("/api/users/:_id/logs", async function(req, res) {
   if (from) {
     fromDate = new Date(from);
     fromDate.setDate(fromDate.getDate()-1);
-    exercises = exercises.filter(e => new Date(e.date).UTC() >= fromDate.UTC());
+    exercises = exercises.filter(e => new Date(e.date).valueOf() >= fromDate.valueOf());
   }
   if (to) {
     toDate = new Date(to);
-    exercises = exercises.filter(e => new Date(e.date).UTC() <= (toDate.UTC()));
+    exercises = exercises.filter(e => new Date(e.date).valueOf() <= (toDate.valueOf()));
   }
   if (limit) {
     exercises = exercises.splice(0, parseInt(limit));
