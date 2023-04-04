@@ -191,6 +191,10 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
     date = new Date(date);
   }
   date = date.toDateString();
+  if (date === "Invalid Date") {
+    console.log(req.body.date);
+    console.log(date)
+  }
   let username = foundUser.username;
   let userId = _id
 
