@@ -184,9 +184,9 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 
   if (!date) {
     date = new Date();
-    date.setUTCDate();
-    date.setUTCMonth();
-    date.setUTCFullYear(); 
+    //date.setUTCDate();
+    //date.setUTCMonth();
+    //date.setUTCFullYear(); 
   } else {
     date = new Date(date);
   }
